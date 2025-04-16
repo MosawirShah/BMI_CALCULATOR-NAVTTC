@@ -1,4 +1,6 @@
 import 'package:bmi_calculator/result.dart';
+import 'package:bmi_calculator/theme_constant.dart';
+import 'package:bmi_calculator/theme_manager.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,8 +17,25 @@ class BMICalculator extends StatefulWidget {
 enum Gender { male, female }
 
 class _BMICalculatorState extends State<BMICalculator> {
+
+
+  @override
+  void initState() {
+    themeManager.addListener(themeChange);
+    super.initState();
+  }
+
+  themeChange(){
+    if(mounted){
+      setState(() {
+
+      });
+    }
+  }
+
   Gender? selectedGender;
 
+  ThemeManager themeManager = ThemeManager();
   ///COLORS
   Color activeColor = Colors.tealAccent;
   Color inActiveColor = Colors.teal;
@@ -29,15 +48,24 @@ class _BMICalculatorState extends State<BMICalculator> {
     print("The Value of Var $selectedGender");
 
     return MaterialApp(
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: themeManager.themeMode,
+
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          backgroundColor: Colors.teal,
+         // backgroundColor: Colors.teal,
           title: Text(
             "BMI Calculator",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
+          actions: [
+            Switch(value: themeManager.themeMode == ThemeMode.dark, onChanged: (newValue){
+              themeManager.changeTheme(newValue);
+            }),
+          ],
         ),
         body: Column(
           children: [
@@ -54,9 +82,7 @@ class _BMICalculatorState extends State<BMICalculator> {
                       });
                     },
                     child: CustomContainer(
-                      containerColor: selectedGender == Gender.male
-                          ? activeColor
-                          : inActiveColor,
+                      containerColor: themeManager.themeMode == ThemeMode.light? inActiveColor :Colors.white10,
                       myChild: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -85,9 +111,7 @@ class _BMICalculatorState extends State<BMICalculator> {
                         });
                       },
                       child: CustomContainer(
-                        containerColor: selectedGender == Gender.female
-                            ? activeColor
-                            : inActiveColor,
+                        containerColor: themeManager.themeMode == ThemeMode.light? inActiveColor :Colors.white10,
                         myChild: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -116,7 +140,7 @@ class _BMICalculatorState extends State<BMICalculator> {
             //TODO: SLider Container
             Expanded(
                 child: CustomContainer(
-              containerColor: Colors.teal,
+              containerColor: themeManager.themeMode == ThemeMode.light? inActiveColor :Colors.white10,
               myChild: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -133,7 +157,7 @@ class _BMICalculatorState extends State<BMICalculator> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "180",
+                        height.toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 40,
@@ -160,7 +184,7 @@ class _BMICalculatorState extends State<BMICalculator> {
                         // print("height :$height");
                       });
                     },
-                    activeColor: Colors.pink,
+
                   )
                 ],
               ),
@@ -172,7 +196,7 @@ class _BMICalculatorState extends State<BMICalculator> {
                 children: [
                   Expanded(
                       child: CustomContainer(
-                    containerColor: Colors.teal,
+                    containerColor: themeManager.themeMode == ThemeMode.light? inActiveColor :Colors.white10,
                     myChild: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -237,7 +261,7 @@ class _BMICalculatorState extends State<BMICalculator> {
                   )),
                   Expanded(
                       child: CustomContainer(
-                    containerColor: Colors.teal,
+                    containerColor:themeManager.themeMode == ThemeMode.light? inActiveColor :Colors.white10,
                     myChild: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -319,6 +343,7 @@ class CustomContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       margin: EdgeInsets.only(left: 5, right: 5, bottom: 2, top: 10),
       decoration: BoxDecoration(
@@ -348,7 +373,7 @@ class _CustomBottomContainerState extends State<CustomBottomContainer> {
         margin: EdgeInsets.only(top: 10),
         height: 60,
         width: double.infinity,
-        color: Colors.teal,
+        color: Theme.of(context).brightness == Brightness.light ? Colors.teal : Colors.pink,
         child: Center(
           child: Text(
             "CALCULATE BMI",

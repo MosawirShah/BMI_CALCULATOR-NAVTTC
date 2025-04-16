@@ -14,7 +14,6 @@ class _ResulClassState extends State<ResulClass> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        backgroundColor: Colors.teal,
         title: Text(
           "BMI Result",
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
