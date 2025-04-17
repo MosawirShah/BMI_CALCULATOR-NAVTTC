@@ -8,7 +8,7 @@ class ThemeManager extends ChangeNotifier{
   ThemeMode _themeMode = ThemeMode.light;
 
   //Getter method for themeMode
-  get themeMode {
+  ThemeMode get themeMode {
     return _themeMode;
   }
 
@@ -17,5 +17,12 @@ class ThemeManager extends ChangeNotifier{
     _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
     notifyListeners();
   }
+  @override
+  void addListener(VoidCallback listener) {
+    print("ADD LISTENER");
+    super.addListener(listener);
+  }
+
+
 
 }
