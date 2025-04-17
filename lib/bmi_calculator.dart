@@ -1,33 +1,39 @@
 import 'dart:math';
 
 class CalculateBMI{
-  double calWeight;
-  double calHeight;
-  double bmi = 15;
+  int calWeight;
+  int calHeight;
+  double? bmi;
   CalculateBMI({required this.calHeight, required this.calWeight});
 
  String calculatedBMI(){
-    bmi = calWeight/pow(calHeight, 2);
-    return bmi.toStringAsFixed(1);
+    bmi = calWeight/pow(calHeight/100, 2);
+    return bmi!.toStringAsFixed(1);
   }
 
   String getResultText(){
-   if(bmi < 18){
-     return "Under Weight";
-   }else if(bmi > 18 && bmi < 25){
-     return "NORMAL";
-   }else {
-     return "Over Weight";
+   if(bmi! != null){
+     if(bmi! > 18){
+       return "NORMAL";
+     }else if(bmi!>= 25){
+       return "OverWeight";
+     }else {
+       return "NORMAL";
+     }
+   }else{
+     bmi = 23.3;
+     return "Unknown Value";
+
    }
   }
 
   String getInterpretation(){
-    if(bmi < 18){
-      return "You are lower weight than normal, Please eat more";
-    }else if(bmi > 18 && bmi < 25){
+    if(bmi! >= 25){
+      return "You are higher weight than normal, Please Continue exercise";
+    }else if(bmi! > 18){
       return "You have normal weight. Good job!";
     }else {
-      return "You are higher weight than normal, Please Continue exercise";
+      return "You are lower weight than normal, Please eat more";
     }
   }
 }

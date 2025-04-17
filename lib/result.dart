@@ -61,7 +61,7 @@ class _ResulClassState extends State<ResulClass> {
                           color: Colors.green),
                     ),
                     const SizedBox(height: 20,),
-                    Text(widget.bmi.toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 70),),
+                    Text(widget.bmi,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 70),),
                     const SizedBox(height:60,),
                     Text(widget.interpretation.toString(),style: TextStyle(),),
 

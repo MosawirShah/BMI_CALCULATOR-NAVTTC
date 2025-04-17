@@ -38,7 +38,7 @@ class _BMICalculatorState extends State<BMICalculator> {
   Color activeColor = Colors.tealAccent;
   Color inActiveColor = Colors.teal;
 
-  double height = 150;
+  int height = 150;
   int weight = 74;
   int age = 18;
   @override
@@ -202,14 +202,14 @@ class _BMICalculatorState extends State<BMICalculator> {
                     ],
                   ),
                   Slider(
-                    value: height,
+                    value: height.toDouble(),
                     max: 180,
                     min: 120,
                     divisions: 60,
                     label: height.toStringAsFixed(1),
                     onChanged: (value) {
                       setState(() {
-                        height = value;
+                        height = value.toInt();
                         // print("height :$height");
                       });
                     },
@@ -359,7 +359,7 @@ class _BMICalculatorState extends State<BMICalculator> {
                 ],
               ),
             ),
-            CustomBottomContainer(height: height, weight: weight.toDouble(),)
+            CustomBottomContainer(height: height, weight: weight,)
           ],
         ),
       ),
@@ -384,28 +384,21 @@ class CustomContainer extends StatelessWidget {
   }
 }
 
-class CustomBottomContainer extends StatefulWidget {
-  double height;
-  double weight;
+class CustomBottomContainer extends StatelessWidget {
+  int height;
+  int weight;
    CustomBottomContainer({super.key,required this.height, required this.weight});
-
-  @override
-  State<CustomBottomContainer> createState() => _CustomBottomContainerState();
-}
-
-class _CustomBottomContainerState extends State<CustomBottomContainer> {
-
 
   @override
   Widget build(BuildContext context) {
 
     return GestureDetector(
       onTap: () {
-       CalculateBMI calculateBMI = CalculateBMI(calHeight: widget.height, calWeight: widget.weight);
+       CalculateBMI calculateBMI = CalculateBMI(calHeight: height, calWeight: weight);
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => ResulClass(
-          resultText: calculateBMI.getResultText(),
           bmi: calculateBMI.calculatedBMI(),
+          resultText: calculateBMI.getResultText(),
           interpretation: calculateBMI.getInterpretation(),
         )));
       },
